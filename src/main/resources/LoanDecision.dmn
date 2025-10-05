@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:feel="https://www.omg.org/spec/FEEL/20140401"
+             id="LoanDecision"
+             name="LoanDecision"
+             namespace="http://example.com/LoanDecision">
+
+  <!-- Input Data Definitions -->
+  <inputData id="input_Income" name="Income">
+    <variable name="Income" typeRef="number"/>
+  </inputData>
+
+  <inputData id="input_CreditScore" name="CreditScore">
+    <variable name="CreditScore" typeRef="number"/>
+  </inputData>
+
+  <!-- Decision Definition -->
+  <decision id="decision_LoanApproval" name="LoanApproval">
+    <variable name="LoanApproval" typeRef="string"/>
+
+    <informationRequirement>
+      <requiredInput href="#input_Income"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_CreditScore"/>
+    </informationRequirement>
+
+    <decisionTable hitPolicy="FIRST">
+      <input id="in1" label="Income">
+        <inputExpression id="inputExpression1" typeRef="number">
+          <text>Income</text>
+        </inputExpression>
+      </input>
+      <input id="in2" label="CreditScore">
+        <inputExpression id="inputExpression2" typeRef="number">
+          <text>CreditScore</text>
+        </inputExpression>
+      </input>
+
+      <output id="out1" label="LoanApproval" name="LoanApproval" typeRef="string"/>
+
+      <rule>
+        <inputEntry id="r1c1"><text>&gt;= 5000</text></inputEntry>
+        <inputEntry id="r1c2"><text>&gt;= 700</text></inputEntry>
+        <outputEntry id="r1o1"><text>"Approved"</text></outputEntry>
+      </rule>
+
+      <rule>
+        <inputEntry id="r2c1"><text>&lt; 5000</text></inputEntry>
+        <inputEntry id="r2c2"><text>&lt; 700</text></inputEntry>
+        <outputEntry id="r2o1"><text>"Rejected"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+</definitions>
